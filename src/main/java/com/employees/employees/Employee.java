@@ -1,17 +1,29 @@
 package com.employees.employees;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.Collection;
+import java.util.Locale;
 import java.util.Objects;
 
-import static java.util.Objects.hash;
+import static org.apache.commons.lang3.StringUtils.capitalize;
 
 public class Employee {
     private String firstName;
     private String lastName;
-
+    private int salary;
+    private int department;
 
     public Employee(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstName = capitalize(firstName.toLowerCase());
+        this.lastName = capitalize(lastName.toLowerCase());
+    }
+
+    public Employee(String firstName, String lastName, int salary, int department) {
+        this.firstName = capitalize(firstName.toLowerCase());
+        this.lastName = capitalize(lastName.toLowerCase()) ;
+        this.salary = salary;
+        this.department = department;
     }
 
     public String getFirstName() {
@@ -22,26 +34,55 @@ public class Employee {
         return lastName;
     }
 
-    @Override
-    public int hashCode() {
-        return hash(firstName, lastName);
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || this.getClass() != other.getClass()) {
-            return false;
-        }
-        Employee e = (Employee) other;
-        return Objects.equals(firstName, e.firstName) && Objects.equals(lastName, e.lastName);
+    public int getSalary() {
+        return salary;
     }
 
+    public int getDepartment() {
+        return department;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
+
+    public void setDepartment(int department) {
+        this.department = department;
+    }
 
     @Override
     public String toString() {
-        return this.firstName + " " + this.lastName;
+        return "Employee{" + "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", salary='" + salary + '\'' +
+                ", department='" + department + '\'' + '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Employee employee)) return false;
+        return Objects.equals(firstName, employee.firstName) &&
+                Objects.equals(lastName, employee.lastName) &&
+                Objects.equals(salary, employee.salary) &&
+                Objects.equals(department, employee.department);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, salary, department);
+    }
+
 }
